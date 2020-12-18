@@ -1,0 +1,222 @@
+﻿@model proyecto.Models.Factura
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h4>Factura</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdProducto" class="control-label"></label>
+                <select class="form-control" name="IdProducto" id="IdProducto">
+                    <option>-- Seleccione producto--</option>
+                    @foreach (var item in ViewBag.productos)
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+
+                    <label asp-for="ClienteId" class="control-label"></label>
+                    <select class="form-control" name="ClienteId">
+                        <option>-- Seleccione cliente--</option>
+                        @foreach (var item in ViewBag.Cliente)
+                        {
+                            <option value="@item.Value">
+                                @item.Text
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="IdServicio" class="control-label"></label>
+                    <select class="form-control" name="IdServicio" id="IdServicio">
+                        <option>-- Seleccione servicio--</option>
+                        @foreach (var item in ViewBag.Servicio)
+                        {
+                            <option value="@item.Value">
+                                @item.Text
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Cantidad_Art" class="control-label"></label>
+                    <input asp-for="Cantidad_Art" id="Cantidad_Art" value="1" class="form-control" />
+                    <span asp-validation-for="Cantidad_Art" class="text-danger"></span>
+                    @ViewBag.error
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Precio" class="control-label"></label>
+                    <input asp-for="Precio" id="Precio" readonly="readonly" class="form-control" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="SubTotal" class="control-label"></label>
+                    <input asp-for="SubTotal" id="SubTotal" readonly="readonly" class="form-control" />
+                    <span asp-validation-for="SubTotal" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Itbis" class="control-label"></label>
+                    <input asp-for="Itbis" id="Itbis" readonly="readonly" class="form-control" />
+                    <span asp-validation-for="Itbis" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Total" class="control-label"></label>
+                    <input asp-for="Total" id="Total" readonly="readonly" class="form-control" />
+                    <span asp-validation-for="Total" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="submit" value="Crear" class="btn btn-primary btn-block" />
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-secondary btn-block"> <i class="fa fa-table"> </i> Regresar al listado</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+
+    var precioproducto = 0;
+    var precioservicio = 0;
+
+    var url = {
+        GetPrecio: BASE_URL+'@Url.Action("GetPrecios", "Facturas")',
+        GetPreciosServicio: BASE_URL+'@Url.Action("GetPreciosServicio", "Facturas")'
+    }
+
+    $("#IdServicio").change(function () {
+        var opcionServicio = $("#IdServicio option:selected").val();
+        if (opcionServicio > 0) {
+
+            $.ajax({
+                url: url.GetPreciosServicio,
+                data: {
+                    id: opcionServicio
+                },
+                type: "get"
+            }).done(function (response) {
+                precioservicio = response;
+                $("#Precio").val(response)
+                var precio = $("#Precio").val()
+                var result = precio * 1;
+                var itbis = result * 1.18;
+                var total = itbis + result;
+                $("#SubTotal").val(result);
+                $("#Itbis").val(itbis);
+                $("#Total").val(total);
+            }).fail(function (error) {
+                alert(error)
+            })
+        } else {
+            $("#Precio").val(0);
+            $("#SubTotal").val(0);
+            $("#Itbis").val(0);
+            $("#Total").val(0);
+        }
+    });
+
+    var producto = $("#IdProducto");
+
+    $("#IdProducto").change(function () {
+        var opcion = $("#IdProducto option:selected").val();
+        if (opcion > 0) {
+            $.ajax({
+                url: url.GetPrecio,
+                data: {
+                    id: opcion
+                },
+                type: "get"
+            }).done(function (response) {
+                precioproducto = response;
+                $("#Precio").val(response)
+                var precio = $("#Precio").val()
+                var cantidad = $("#Cantidad_Art").val()
+                var result = response * cantidad;
+                var itbis = result * 1.18;
+                var total = itbis + result;
+                $("#SubTotal").val(result);
+                $("#Itbis").val(itbis);
+                $("#Total").val(total);
+            }).fail(function (error) {
+                alert(error)
+            })
+        } else {
+            $("#Precio").val(0);
+            $("#SubTotal").val(0);
+            $("#Itbis").val(0);
+            $("#Total").val(0);
+        }
+    });
+
+    function getPrecios() {
+        if ($("#IdProducto").val() != 0 && $("#IdServicio").val() != 0) {
+            var resultado = 0;
+            resultado = parseInt(precioproducto) + parseInt(precioservicio);
+            $("#Precio").val(resultado)
+            var cantidad = $("#Cantidad_Art").val()
+            var result = ((parseInt(precioproducto) * cantidad) + parseInt(precioservicio));
+            var itbis = result * 1.18;
+            var total = itbis + result;
+            $("#SubTotal").val(result);
+            $("#Itbis").val(itbis);
+            $("#Total").val(total);
+        }
+    }
+
+
+    // Cantidad
+    $("#Cantidad_Art").change(function () {
+        if ($("#IdProducto").val() > 0) {
+            var precio = $("#Precio").val()
+            var cantidad = $("#Cantidad_Art").val()
+            var result = precio * cantidad;
+            var itbis = result * 1.18;
+            var total = itbis + result;
+            $("#SubTotal").val(result);
+            $("#Itbis").val(itbis);
+            $("#Total").val(total);
+            getPrecios();
+        }
+    });
+
+
+
+</script>
+
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

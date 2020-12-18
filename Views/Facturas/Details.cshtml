@@ -1,0 +1,101 @@
+﻿@model proyecto.Models.Factura
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #btnPdf {
+        max-width: 15%;
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<h1>Details</h1>
+
+
+<form asp-action="Cancelar">
+    <input type="hidden" name="Idfactura"  value="@Model.Idfactura" />
+    <input type="hidden" name="IdProducto"  value="@Model.IdProducto" />
+    <input type="hidden" name="IdServicio"  value="@Model.IdServicio" />
+    <input type="hidden" name="ClienteId"  value="@Model.ClienteId" />
+    <div id="pdfContainer">
+
+
+        <h4>Factura</h4>
+        <hr />
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cantidad_Art)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.Cantidad_Art" name="Cantidad_Art" readonly="readonly" />
+
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.Descripcion" name="Descripcion" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Precio)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.Precio" name="Precio" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Itbis)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.Itbis" name="Itbis" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Total)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.Total" name="Total" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cliente)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.NombreCliente" name="NombreCliente" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Productos)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.NombreProducto" name="NombreProducto" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Servicio)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.NombreServicios" name="NombreServicios" readonly="readonly" />
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </div>
+            <div class="col-sm-10">
+                <input value="@Model.FechaRegistro" name="FechaRegistro" readonly="readonly" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Idfactura">Edit</a> |
+        <button type="submit" asp-action="Cancelar" asp-route-id="@Model.Idfactura">Cancelar</button> |
+        <a asp-action="Index">Back to List</a> |
+        @*<button icon="export" id="btnPdf">Generate Pdf</button>*@
+        <img id="btnPdf" style="width: 37px" src="https://img.icons8.com/dotty/80/000000/export-pdf.png" />  <label>Imprimir</label>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    $("#btnPdf").click(function () {
+        var sHtml = $("#pdfContainer").html();
+        sHtml = sHtml.replace(/</g, "StrTag").replace(/>/g, "EndTag");
+        window.open('../Exportar?html=' + sHtml, '_blank');
+
+    });
+</script>

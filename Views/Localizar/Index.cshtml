@@ -1,0 +1,59 @@
+﻿@model IEnumerable<proyecto.Models.Cliente>
+@using Newtonsoft.Json;
+
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+                var db = new ClienteContext();
+                var json = JsonConvert.SerializeObject(db.Clientes.ToList());
+                var jsoni = JsonConvert.SerializeObject(db.Clientes.ToList(), Formatting.Indented,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                }
+            ); }
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<style type="text/css">
+    #map {
+        height: 80vh;
+        width: 180vh;
+    }
+</style>
+
+<div id="map">
+
+
+</div>
+<script>
+
+
+    const para = {
+
+        center: [18.66, -69.80],
+        zoom: 10
+
+
+    }
+
+
+    let map = L.map('map', para)
+    let tileLayer = L.tileLayer('http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png')
+    map.addLayer(tileLayer)
+
+    map.addLayer(tileLayer)
+        var data= @Html.Raw(json);
+        var datai= @Html.Raw(jsoni);
+        for(let i of data){
+
+
+
+            L.marker([i.Lat, i.Long]).addTo(map)
+                .bindPopup('<strong>Nombre: </strong>' + i.Nombre + '<br><strong>Rnc: </strong>' + i.Rnc + '<br><strong>Latitud:</strong> ' + i.Lat + '<br><strong>Longitud:</strong> '
+                + i.Long + '<br><strong>Telefono: </strong>' + i.Telefono)
+                         .openPopup();
+
+
+        }
+</script>

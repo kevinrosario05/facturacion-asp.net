@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
+edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJl4DstYzzEuS6eDD7U1GbwAAAAACAAAAAAAQZgAAAAEAACAAAAC89WCUwVEJveVbDtfb9s/5ui8GsggEFhMd8Max5dCPXAAAAAAOgAAAAAIAACAAAADC0FYUfAXzZPD9CnXqCN6maegBpYHX+qVndfJXR3JR1IAAAAD+rKuKa0tsdHcFEwlTqu8SQgGjCZvAJ2G3MJrYm1g5hP9P4WvF8UgxTkEklSYy+YWkwbaHAoCArRywyHyssyx0pbJDONUgfqepAxp6gtJ+2H8QZbdf/inbIT534CmK5qy65gOFQgYyfxxHq/2P7+7MRaB3TMI2o95eLCeFZs52NEAAAAAn8O5vl/TvWhKM8qgC6L28kHu6RXRGb1IxUuHXzBeduTVud8KUs42XqwbC0ex6XIbKYllmUocZmru1nAr28aoc</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="proyectoContextConnection">
+      <Value>Server=tcp:proyectofinalp3.database.windows.net,1433%3bInitial Catalog=appFacturacion%3bPersist Security Info=False%3bUser ID=proyecto%3bPassword=24022903Jhonni%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<proyecto.Models.Cliente>
+
+@{
+    ViewData["Title"] = "ListaCumpleaños";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de cumpleaños</h1>
+
+
+@*<label class="control-label">Mes</label>
+<select class="form-control" name="IdProducto" id="IdMes">
+        <option value="1">Enero</option>
+        <option value="2">Febrero</option>
+        <option value="3">Marzo</option>
+        <option value="4">Abril</option>
+        <option value="5">Mayo</option>
+        <option value="6">Junio</option>
+        <option value="7">Julio</option>
+        <option value="8">Agosto</option>
+        <option value="9">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+</select>*@
+
+<table class="table" id="tabla">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rnc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCumpleaños)
+            </th>
+        </tr>
+    </thead>
+    <tbody id="">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rnc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCumpleaños)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*<script>
+        var url = {
+            GetMes: BASE_URL + '@Url.Action("ListaCumpleaños", "Reportes")'
+    }
+
+    $("#IdMes").change(function () {
+        var opcion = $("#IdMes option:selected").val();
+            $.ajax({
+                url: url.GetMes,
+                data: {
+                    id: opcion
+                },
+                type: "get"
+            }).done(function (response) {
+                $("#tabla").val(response)
+            }).fail(function (error) {
+                alert(error)
+            })
+    });
+</script>*@

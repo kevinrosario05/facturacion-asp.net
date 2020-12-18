@@ -1,0 +1,48 @@
+﻿@model IEnumerable<proyecto.Models.Servicio>
+
+@{
+    ViewData["Title"] = "MasVendidosServicios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Servicios mas Vendidos</h1>
+
+<div id="pdfContainer">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_Servic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contador)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre_Servic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contador)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+<div>
+    <button class="btn btn-primary" type="submit" id="btnPdf">Servicios mas vendidos</button>
+</div>
+<script type="text/javascript">
+        $("#btnPdf").click(function () {
+            var sHtml = $("#pdfContainer").html();
+            sHtml = sHtml.replace(/</g, "StrTag").replace(/>/g, "EndTag");
+            window.open('../Reportes/Exportar?html=' + sHtml, '_blank');
+
+        });
+</script>
+

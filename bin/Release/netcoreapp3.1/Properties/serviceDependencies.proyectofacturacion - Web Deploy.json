@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/proyectofinalp3/databases/appFacturacion",
+      "type": "mssql.azure",
+      "connectionId": "proyectoContextConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
